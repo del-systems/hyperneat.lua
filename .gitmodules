@@ -1,3 +1,3 @@
 [submodule "neat.lua"]
-	path = neat.lua
+	path = neat
 	url = git@github.com:del-systems/neat.lua.git

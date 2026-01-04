@@ -1,4 +1,4 @@
-local neat = require 'neat.lua/neat'
+local neat = require 'neat/neat'
 local neat_settings = {}
 
 local HYPERNEAT = {}
