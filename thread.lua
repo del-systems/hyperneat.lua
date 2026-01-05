@@ -187,7 +187,7 @@ while true do
     end
   end
   neat.print_genome(population[1].genome)
-  population = hyperneat.evolve_population(population)
   champion_neat_channel:push(neat.purify_genome(population[1].genome))
+  population = hyperneat.evolve_population(population)
   max_files = max_files + 1
 end
