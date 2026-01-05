@@ -19,7 +19,7 @@ function HYPERNEAT.refill_weights(substrate, settings)
 end
 
 function HYPERNEAT.create_2dsubstrate(settings)
-  local genome = settings.genome or r neat.create_genome(settings.neat_settings or substrate2d_neat_settings)
+  local genome = settings.genome or neat.create_genome(settings.neat_settings or substrate2d_neat_settings)
   local substrate = {
     genome = genome,
     settings = settings,

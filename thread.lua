@@ -16,7 +16,7 @@ for i = 1, 100 do
     output_count = 10
   }
 
-  if true then
+  if false then
     hyperneat_settings.genome = {
       fitness = 0,
       settings = { innovation_counter = 841 },
@@ -161,9 +161,14 @@ local function train(i)
     local results = hyperneat.evaluate(substrate, inputs)
     local max = math.max(results[1], results[2], results[3], results[4], results[5], results[6], results[7], results[8], results[9], results[10])
     local min = math.min(results[1], results[2], results[3], results[4], results[5], results[6], results[7], results[8], results[9], results[10])
+    local sorted_results = {}
+    for _, v in ipairs(results) do
+      table.insert(sorted_results, v)
+    end
+    table.sort(sorted_results, function (a, b) return a > b end)
 
     local dir_number = tonumber(all_files[i].directory)
-    if min < 0.4 and max > 0.5 and max == results[dir_number + 1] then
+    if sorted_results[1] > 0.5 and sorted_results[2] < 0.4 and max == results[dir_number + 1] then
       substrate.fitness = substrate.fitness + 1
     else
       substrate.fitness = substrate.fitness - 1
@@ -177,7 +182,7 @@ local function train(i)
 end
 
 
-local max_files = 3
+local max_files = 10
 while true do
   for i = 1, math.min(max_files, #all_files) do
     if max_files >= #all_files then
@@ -187,6 +192,9 @@ while true do
     end
   end
   neat.print_genome(population[1].genome)
+  if population[1].genome.fitness < 1 then
+    max_files = max_files - 1
+  end
   champion_neat_channel:push(neat.purify_genome(population[1].genome))
   population = hyperneat.evolve_population(population)
   max_files = max_files + 1
